@@ -1,7 +1,7 @@
 // 信号量
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <unistd.h>
 #include <pthread.h>
 //信号量
 #include <semaphore.h>
@@ -18,7 +18,12 @@ void *task(void *p)
     
     int id = *((int *)p);
     free(p);
-    printf("线程%d尝试进入临界区\n", id);
+
+    sem_wait(&sem);
+    printf("线程%d 开始\n", id);
+    sleep(5);
+    printf("线程%d 结束\n", id);
+    sem_post(&sem);
 }
 
 int main(int argc, char const *argv[])
